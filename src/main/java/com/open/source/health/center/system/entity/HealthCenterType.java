@@ -3,6 +3,7 @@ package com.open.source.health.center.system.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
