@@ -1,0 +1,46 @@
+package com.open.source.health.center.system.controller;
+
+import com.open.source.health.center.system.dto.HealthCenterDto;
+import com.open.source.health.center.system.dto.HealthCenterRatingDto;
+import com.open.source.health.center.system.dto.HealthCenterTypeDto;
+import com.open.source.health.center.system.manager.HealthCenterManager;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.List;
+
+@AllArgsConstructor
+@RestController
+@RequestMapping("/healthCenter")
+public class HealthCenterController {
+
+    private final HealthCenterManager manager;
+
+    @GetMapping("/types")
+    public ResponseEntity<List<HealthCenterTypeDto>> typeList() {
+        return ResponseEntity.ok(this.manager.typeList());
+    }
+
+    @PostMapping
+    public ResponseEntity<?> register(@Valid @RequestBody HealthCenterDto dto){
+
+        this.manager.register(dto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(Collections.singletonMap("success", true));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<HealthCenterDto>> getAll(){
+        return ResponseEntity.ok(this.manager.getAll());
+    }
+
+    @GetMapping("/withRating")
+    public ResponseEntity<List<HealthCenterRatingDto>> getAllWithRating(){
+        return ResponseEntity.ok(this.manager.getAllWithRating());
+    }
+
+}

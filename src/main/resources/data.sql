@@ -1,6 +1,6 @@
 -- INSERTS PARA TIPO_SALUD
 INSERT INTO health_center_type (id, name) VALUES (1, 'Hospital');
-INSERT INTO health_center_type (id, name) VALUES (2, 'Clinic');
+INSERT INTO health_center_type (id, name) VALUES (2, 'Clinica');
 
 
 

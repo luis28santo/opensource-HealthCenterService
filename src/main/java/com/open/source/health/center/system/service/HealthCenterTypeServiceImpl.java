@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class HealthCenterTypeServiceImpl implements HealthCenterTypeService {
 
-    private HealthCenterTypeRepository repository;
+    private final HealthCenterTypeRepository repository;
 
     @Override
     public List<HealthCenterTypeDto> list() {

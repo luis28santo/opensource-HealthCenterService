@@ -1,11 +1,15 @@
 package com.open.source.health.center.system.service;
 
 import com.open.source.health.center.system.dto.HealthCenterDto;
+import com.open.source.health.center.system.dto.HealthCenterTypeDto;
 import com.open.source.health.center.system.entity.HealthCenter;
 import com.open.source.health.center.system.entity.HealthCenterType;
 import com.open.source.health.center.system.repository.HealthCenterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -30,6 +34,41 @@ public class HealthCenterServiceImpl implements HealthCenterService {
         healthCenter = this.healthCenterRepository.save(healthCenter);
         healthCenterDto.setId(healthCenter.getId());
         return healthCenterDto;
+    }
+
+    @Override
+    public Optional<HealthCenterDto> findByName(String name) {
+        return this.healthCenterRepository.findByName(name)
+                .map(item ->
+                        HealthCenterDto.builder()
+                                .id(item.getId())
+                                .type(HealthCenterTypeDto.builder()
+                                        .id(item.getType().getId())
+                                        .name(item.getType().getName())
+                                        .build())
+                                .name(item.getName())
+                                .serviceScore(item.getServiceScore())
+                                .infrastructureScore(item.getInfrastructureScore())
+                                .hasAmbulance(item.isHasAmbulance())
+                                .build()
+                );
+    }
+
+    @Override
+    public List<HealthCenterDto> list() {
+        return this.healthCenterRepository.findAll().stream()
+                .map(item -> HealthCenterDto.builder()
+                        .id(item.getId())
+                        .type(HealthCenterTypeDto.builder()
+                                .id(item.getType().getId())
+                                .name(item.getType().getName())
+                                .build())
+                        .name(item.getName())
+                        .serviceScore(item.getServiceScore())
+                        .infrastructureScore(item.getInfrastructureScore())
+                        .hasAmbulance(item.isHasAmbulance())
+                        .build())
+                .toList();
     }
 
 }
