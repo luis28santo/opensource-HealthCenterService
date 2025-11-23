@@ -60,4 +60,38 @@ public class HealthCenterManager {
                 .toList();
     }
 
+    public List<HealthCenterDto> getTypeCentroSalud(int idTipoCentro){
+
+        return this.healthCenterService.list()
+                .stream()
+                .filter(c -> c.getType().getId() == idTipoCentro)
+                .toList();
+    }
+
+    public Boolean getWithRatingStatus(int idCentro){
+
+        return this.healthCenterService.list()
+                .stream().map(item -> {
+
+                    double rating = HealthCenterRatingDto.calculateRating(item.getInfrastructureScore(), item.getServiceScore());
+                    boolean approved = HealthCenterRatingDto.isApproved(rating);
+
+                    return HealthCenterRatingDto
+                            .builder()
+                            .id(item.getId())
+                            .name(item.getName())
+                            .type(item.getType().getName())
+                            .rating(rating)
+                            .approved(approved)
+                            .build();
+
+                })
+                .filter(c -> c.getId() == idCentro)
+                .findFirst()
+                .map(c -> c.isApproved())
+                .orElse(false);
+
+
+    }
+
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @RestController
@@ -42,5 +43,20 @@ public class HealthCenterController {
     public ResponseEntity<List<HealthCenterRatingDto>> getAllWithRating(){
         return ResponseEntity.ok(this.manager.getAllWithRating());
     }
+    @GetMapping("/CenterTypes")
+    public ResponseEntity<List<HealthCenterDto>> getTypeCentroSalud(int idTipoCentro){
+
+        return ResponseEntity.ok(this.manager.getTypeCentroSalud(idTipoCentro));
+    }
+
+    @GetMapping("/withRatingStatus")
+    public ResponseEntity<Map<String, Boolean>> getWithRatingStatus(int idCentro){
+
+        boolean approved = this.manager.getWithRatingStatus(idCentro);
+
+        return ResponseEntity.ok(Map.of("approved", approved));
+
+    }
+
 
 }

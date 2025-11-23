@@ -15,3 +15,13 @@ INSERT INTO health_center
 (name, type_id, infrastructure_score, service_score, has_ambulance)
 VALUES
 ('Miraflores Medical Clinic', 2, 70, 75, false);
+
+INSERT INTO health_center
+(name, type_id, infrastructure_score, service_score, has_ambulance)
+VALUES
+    ('Clínica Internacional', 2, 80, 90, true);
+
+INSERT INTO health_center
+(name, type_id, infrastructure_score, service_score, has_ambulance)
+VALUES
+    ('Clínica Javier Prado', 2, 10, 55, true);

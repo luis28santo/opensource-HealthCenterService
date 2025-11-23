@@ -14,4 +14,5 @@ public interface HealthCenterService {
 
     List<HealthCenterDto> list();
 
+
 }
