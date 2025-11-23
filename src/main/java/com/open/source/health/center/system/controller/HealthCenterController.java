@@ -3,6 +3,7 @@ package com.open.source.health.center.system.controller;
 import com.open.source.health.center.system.dto.HealthCenterDto;
 import com.open.source.health.center.system.dto.HealthCenterRatingDto;
 import com.open.source.health.center.system.dto.HealthCenterTypeDto;
+import com.open.source.health.center.system.entity.UpdateNameHealthCenterRequest;
 import com.open.source.health.center.system.manager.HealthCenterManager;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -43,7 +44,7 @@ public class HealthCenterController {
     public ResponseEntity<List<HealthCenterRatingDto>> getAllWithRating(){
         return ResponseEntity.ok(this.manager.getAllWithRating());
     }
-    @GetMapping("/CenterTypes")
+    @GetMapping("/centerTypes")
     public ResponseEntity<List<HealthCenterDto>> getTypeCentroSalud(int idTipoCentro){
 
         return ResponseEntity.ok(this.manager.getTypeCentroSalud(idTipoCentro));
@@ -56,6 +57,12 @@ public class HealthCenterController {
 
         return ResponseEntity.ok(Map.of("approved", approved));
 
+    }
+
+    @PutMapping("/name/{id}")
+    public ResponseEntity<?> updateNameHealthCenter(@PathVariable Long id, @Valid @RequestBody UpdateNameHealthCenterRequest request){
+        this.manager.updateNameHealthCenter(id, request.getName());
+        return ResponseEntity.ok(Collections.singletonMap("success", true));
     }
 
 

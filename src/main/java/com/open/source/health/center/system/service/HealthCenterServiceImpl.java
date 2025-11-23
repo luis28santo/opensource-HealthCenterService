@@ -71,4 +71,21 @@ public class HealthCenterServiceImpl implements HealthCenterService {
                 .toList();
     }
 
+    @Override
+    public Optional<HealthCenterDto> getById(Long id) {
+        return this.healthCenterRepository.findById(id).map(item ->
+                HealthCenterDto.builder()
+                        .id(item.getId())
+                        .type(HealthCenterTypeDto.builder()
+                                .id(item.getType().getId())
+                                .name(item.getType().getName())
+                                .build())
+                        .name(item.getName())
+                        .serviceScore(item.getServiceScore())
+                        .infrastructureScore(item.getInfrastructureScore())
+                        .hasAmbulance(item.isHasAmbulance())
+                        .build()
+        );
+    }
+
 }

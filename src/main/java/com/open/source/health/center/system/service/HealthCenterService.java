@@ -14,5 +14,5 @@ public interface HealthCenterService {
 
     List<HealthCenterDto> list();
 
-
+    Optional<HealthCenterDto> getById(Long id);
 }

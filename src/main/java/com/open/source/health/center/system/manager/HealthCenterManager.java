@@ -25,22 +25,22 @@ public class HealthCenterManager {
 
         Optional<HealthCenterDto> opt = this.healthCenterService.findByName(healthCenterDto.getName());
 
-        if(opt.isPresent() && opt.get().getName().equalsIgnoreCase(healthCenterDto.getName())){
+        if (opt.isPresent() && opt.get().getName().equalsIgnoreCase(healthCenterDto.getName())) {
             throw new RuntimeException("El nombre del centro ya existe.");
         }
 
         this.healthCenterService.save(healthCenterDto);
     }
 
-    public List<HealthCenterTypeDto> typeList (){
+    public List<HealthCenterTypeDto> typeList() {
         return this.healthCenterTypeService.list();
     }
 
-    public List<HealthCenterDto> getAll(){
+    public List<HealthCenterDto> getAll() {
         return this.healthCenterService.list();
     }
 
-    public List<HealthCenterRatingDto> getAllWithRating(){
+    public List<HealthCenterRatingDto> getAllWithRating() {
         return this.healthCenterService.list()
                 .stream().map(item -> {
 
@@ -60,7 +60,7 @@ public class HealthCenterManager {
                 .toList();
     }
 
-    public List<HealthCenterDto> getTypeCentroSalud(int idTipoCentro){
+    public List<HealthCenterDto> getTypeCentroSalud(int idTipoCentro) {
 
         return this.healthCenterService.list()
                 .stream()
@@ -68,7 +68,7 @@ public class HealthCenterManager {
                 .toList();
     }
 
-    public Boolean getWithRatingStatus(int idCentro){
+    public Boolean getWithRatingStatus(int idCentro) {
 
         return this.healthCenterService.list()
                 .stream().map(item -> {
@@ -92,6 +92,24 @@ public class HealthCenterManager {
                 .orElse(false);
 
 
+    }
+
+    public void updateNameHealthCenter(Long id, String name) {
+        HealthCenterDto dto = this.healthCenterService.getById(id).orElseThrow(() -> new RuntimeException("Centro de salud no encontrado."));
+
+        Optional<HealthCenterDto> opt = this.healthCenterService.findByName(name);
+
+        if (!opt.isPresent()) {
+            this.healthCenterService.save(dto);
+        }
+
+        HealthCenterDto dtoNameExisting = opt.get();
+
+        if (!dto.getId().equals(dtoNameExisting.getId())) {
+            throw new RuntimeException("El nombre del centro medico ya esta en uso.");
+        }
+
+        this.healthCenterService.save(dto);
     }
 
 }
